@@ -9,24 +9,17 @@ class AppTest < MiniTest::Unit::TestCase
     Polybius::App
   end
 
-  def test_get_root
-    get "/"
-
-    assert last_response.ok?
-    assert_equal ":poop:", last_response.body
-  end
-
   def test_get_sha
-    Polybius.stub :sha, "87dbag3" do
+    Polybius.stub :sha, "87dbaf3" do
       get "/sha"
 
       assert last_response.ok?
-      assert_equal "87dbag3", last_response.body
+      assert_equal "87dbaf3", last_response.body
     end
   end
 
   def test_post_receive
-    post "/receive", JSON.parse(messages)
+    post "/receive", messages.to_s, "CONTENT_TYPE" => "application/json"
 
     assert last_response.ok?
   end
