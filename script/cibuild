@@ -1,0 +1,37 @@
+#!/bin/sh
+
+set -e
+[ -z "$DEBUG" ] || set -x
+
+# GC customizations
+export RACK_ROOT=$(cd "$(dirname $0)"/.. && pwd)
+export RACK_ENV="test"
+
+test -d "/usr/share/rbenv/shims" && {
+  export PATH="/usr/share/rbenv/shims:$PATH"
+  export RBENV_VERSION="2.0.0-github3"
+}
+
+# clean out the ruby environment
+export RUBYLIB=
+export RUBYOPT=
+
+# bootstrap gem environment changes
+cd "$RACK_ROOT"
+
+# put our stuff on the front of path
+export PATH="$RACK_ROOT/bin:$PATH"
+
+# config info
+RUBY_VERSION=`ruby --version`
+GEM_VERSION=`gem --version`
+BUNDLER_VERSION=`bundle --version`
+
+echo "==> Fetching config..."
+echo "Ruby version:    ${RUBY_VERSION}"
+echo "Gem version:     ${GEM_VERSION}"
+echo "Bundler version: ${BUNDLER_VERSION}"
+echo "PATH:            ${PATH}"
+echo ""
+
+script/test

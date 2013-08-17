@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+[ -z "$DEBUG" ] || set -x
+
+if [ "${RACK_ENV}" = "test" ]; then
+  script/bootstrap --local
+else
+  export RACK_ENV="test"
+  script/bootstrap
+fi
+
+ruby -Itest -e \
+  "(ARGV.any? ? ARGV : Dir['test/**/*_test.rb']).each { |f| load f }"
