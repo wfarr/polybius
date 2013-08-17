@@ -1,5 +1,6 @@
 require "polybius"
 
+require "json"
 
 require "sinatra/base"
 
@@ -14,4 +15,6 @@ class Polybius::App < Sinatra::Base
     Polybius.sha
   end
 
+  post "/receive" do
+  end
 end
