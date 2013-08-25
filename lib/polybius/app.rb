@@ -15,7 +15,11 @@ class Polybius::App < Sinatra::Base
   post "/receive" do
     messages = JSON.parse(request.body.read)["messages"]
 
-    messages.each { |message| Polybius::CampfireNotifier.new.notify! message }
+    messages.each do |message|
+      puts message.inspect
+
+      Polybius::CampfireNotifier.new.notify! message
+    end
 
     [200, "OK"]
   end
