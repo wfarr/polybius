@@ -4,6 +4,8 @@ require "sinatra/base"
 
 class Polybius::App < Sinatra::Base
 
+  set :logging, true
+
   get "/" do
     ":poop:"
   end
