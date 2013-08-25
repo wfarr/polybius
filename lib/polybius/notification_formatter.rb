@@ -10,7 +10,7 @@ module Polybius
       when :trigger
         "Incident #{incident_number} triggered and assigned to #{assigned_to_user}: #{summary} (#{url})"
       when :acknowledge
-        "Incident #{incident_number} acknowledged by #{acknowledged_by_user}, assigned to #{assigned_to_user}: #{summary} (#{url})"
+        "Incident #{incident_number} acknowledged by #{last_change_user}, assigned to #{assigned_to_user}: #{summary} (#{url})"
       when :unacknowledge
         "Incident #{incident_number} acknowledgement timed out, triggered and assigned to #{assigned_to_user}: #{summary} (#{url})"
       when :resolve
@@ -18,11 +18,11 @@ module Polybius
       when :assign
         "Incident #{incident_number} manually re-assigned to #{assigned_to_user}: #{summary} (#{url})"
       when :escalate
-        "Incident #{incident_number} escalated to #{escalated_to_user} by #{escalated_by_user}: #{summary} (#{url})"
+        "Incident #{incident_number} escalated to #{escalated_to_user} by #{last_change_user}: #{summary} (#{url})"
       when :delegate
-        # noop
+        "Incident #{incident_number} manually re-assigned to #{assigned_to_user} by #{last_change_user}: #{summary} (#{url})"
       else
-        # noop
+        raise "wat"
       end
     end
 
@@ -49,12 +49,8 @@ module Polybius
       incident["assigned_to_user"]["name"]
     end
 
-    def acknowledged_by_user
+    def last_change_user
       incident["last_status_change_by"]["name"]
-    end
-
-    def escalated_by_user
-      incident["escalated_by_user"]["name"]
     end
 
     def resolved_by_user
