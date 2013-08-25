@@ -46,11 +46,27 @@ module Polybius
     end
 
     def assigned_to_user
-      incident["assigned_to_user"]["name"]
+      if incident.has_key? "assigned_to_user"
+        if incident["assigned_to_user"]
+          incident["assigned_to_user"]["name"]
+        else
+          "lol who the fuck knows"
+        end
+      else
+        "lol who the fuck knows"
+      end
     end
 
     def last_change_user
-      incident["last_status_change_by"]["name"]
+      if incident.has_key? "last_status_change_by"
+        if incident["last_status_change_by"]
+          incident["last_status_change_by"]["name"]
+        else
+          "lol who the fuck knows"
+        end
+      else
+        "lol who the fuck knows"
+      end
     end
 
     def resolved_by_user
