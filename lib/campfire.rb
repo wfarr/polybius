@@ -2,13 +2,13 @@ require "tinder"
 
 class Campfire
   def initialize
-    required_environment_variables %w(CAMPFIRE_SUBDOMAIN CAMPFIRE_OAUTH_TOKEN)
+    required_environment_variables %w(CAMPFIRE_SUBDOMAIN CAMPFIRE_OAUTH_TOKEN CAMPFIRE_ROOM_NAME)
 
     @client ||= Tinder::Campfire.new(ENV["CAMPFIRE_SUBDOMAIN"], :token => ENV["CAMPFIRE_OAUTH_TOKEN"])
   end
 
-  def ops
-    @client.find_room_by_name("Ops")
+  def speak(message)
+    @client.find_room_by_name(ENV["CAMPFIRE_ROOM_NAME"]).speak(message)
   end
 
   private
