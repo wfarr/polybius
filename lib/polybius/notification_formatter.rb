@@ -50,7 +50,7 @@ module Polybius
     end
 
     def acknowledged_by_user
-      incident["acknowledged_to_user"]["name"]
+      incident["last_status_change_by"]["name"]
     end
 
     def escalated_by_user
